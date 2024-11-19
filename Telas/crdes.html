@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-bt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TaskBoard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-content">
+        <span>Logo</span>
+        <h1>Nome do sistema</h1>
+      </div>
+      <div class="user-info">
+        <span>Usuario vai aqui</span>
+        <button class="logout-btn">Logout</button>
+        <div class="user-info-2">
+          <label class="switch">
+            <input type="checkbox" id="dark-mode-toggle" />
+            <span class="slider round"></span>
+          </label>
+          <span>Dark</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="kanban">
+        <div class="column">
+          <h2>Feito</h2>
+          <div class="items-container">
+            <div class="item" draggable="true">Acessar via email</div>
+            <div class="item" draggable="true">Listar quadros</div>
+            <div class="item" draggable="true">Apresentar Quadro</div>
+            <div class="item" draggable="true">
+              Apresentar colunas por quadro
+            </div>
+            <div class="item" draggable="true">
+              Apresentar tarefas por coluna
+            </div>
+          </div>
+          <button class="new-task-btn">Nova tarefa</button>
+        </div>
+
+        <div class="column">
+          <h2>Revisão</h2>
+          <div class="items-container">
+            <!-- Itens podem ser adicionados aqui -->
+          </div>
+          <button class="new-task-btn">Nova tarefa</button>
+        </div>
+
+        <div class="column">
+          <h2>Em progresso...</h2>
+          <div class="items-container">
+            <!-- Itens podem ser adicionados aqui -->
+          </div>
+          <button class="new-task-btn">Nova tarefa</button>
+        </div>
+
+        <div class="column">
+          <h2>A fazer</h2>
+          <div class="items-container">
+            <!-- Itens podem ser adicionados aqui -->
+          </div>
+          <button class="new-task-btn">Nova tarefa</button>
+        </div>
+
+        <div class="column">
+          <h2>Feito</h2>
+          <div class="items-container">
+            <!-- Itens podem ser adicionados aqui -->
+          </div>
+          <button class="new-task-btn">Nova tarefa</button>
+        </div>
+      </div>
+      <button class="new-column-btn">Nova coluna</button>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,209 @@
+/* Reset de estilos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #e0f2f7; /* Cor de fundo azul clara */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  background-color: #2196f3; /* Azul mais escuro */
+  color: white;
+  padding: 10px 20px; /* Espaçamento interno ajustado */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-content {
+  /* Novo container para alinhar o ícone e o título */
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espaço entre o ícone e o título */
+}
+
+.header-content img {
+  /* Estilos para o ícone de email */
+  vertical-align: middle;
+}
+
+.user-info {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 50px;
+}
+
+.user-info-2{
+    display: flex;
+    align-items: center;
+}
+.logout-btn {
+  background-color: #f44336; /* Vermelho para o botão de logout */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Estilos para o switch dark mode */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196f3; /* Azul para quando ativado */
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+main {
+  flex-grow: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.kanban {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-grow: 1;
+  overflow-x: auto;
+  background-color: #bbdefb; /* Cor de fundo azul clara para o Kanban */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  gap: 10px;
+}
+
+.column h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.item {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.new-column-btn,
+.new-task-btn {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px; /* Tamanho da fonte ajustado */
+  margin: 5px 0; /* Margem ajustada */
+  cursor: pointer;
+  border-radius: 5px;
+  align-self: flex-end; /* Alinha os botões "Nova tarefa" à direita */
+}
+#board-select {
+  background-color: #555; /* Cinza escuro */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  appearance: none; /* Remove a seta padrão do select */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+body.dark-mode {
+    background-color: #333; /* Cor de fundo escura */
+    color: white;
+}
+
+body.dark-mode .kanban {
+  background-color: #444;
+}
+
+body.dark-mode .column {
+  background-color: #555;
+}
+
+body.dark-mode .item {
+  background-color: #666;
+  color: white;
+}
+body.dark-mode header{
+  background-color: #444;
+  color: white;
+
+}
+body.dark-mode .logout-btn {
+  background-color: #f44336; /* Vermelho para o botão de logout */
+  color: white;
+
+}
+body.dark-mode #board-select{
+  background-color: #777; /* Cinza escuro */
+  color: white;
+
+}
