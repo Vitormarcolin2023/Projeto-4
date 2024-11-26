@@ -1,3 +1,8 @@
+function logoff() {
+  localStorage.clear();
+  window.location.href = "index.html";
+}
+
 const columns = document.querySelectorAll(".column");
 const darkModeToggle = document.getElementById("dark-mode-toggle");
 const body = document.body;
@@ -74,3 +79,22 @@ function getNewPosition(itemsContainer, posY) {
   }
   return result;
 }
+
+/* Quando o usuário clicar no botão, alterne entre ocultar e mostrar o conteúdo suspenso/dropdown. */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Feche o menu suspenso/dropdown se o usuário clicar fora dele.
+window.onclick = function (event) {
+  if (!event.target.matches(".dropbtn")) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains("show")) {
+        openDropdown.classList.remove("show");
+      }
+    }
+  }
+};

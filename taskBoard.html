@@ -11,10 +11,18 @@
       <div class="header-content">
         <span>Logo</span>
         <h1>Nome do sistema</h1>
+        <div class="dropdown">
+          <button onclick="myFunction()" class="dropbtn">Selecione a sua Boards</button>
+          <div id="myDropdown" class="dropdown-content">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
       </div>
       <div class="user-info">
         <span>Usuario vai aqui</span>
-        <button class="logout-btn">Logout</button>
+        <button class="logout-btn" onclick="logoff()">Logout</button>
         <div class="user-info-2">
           <label class="switch">
             <input type="checkbox" id="dark-mode-toggle" />
@@ -26,6 +34,7 @@
     </header>
 
     <main>
+      
       <div class="kanban">
         <div class="column">
           <h2>Feito</h2>
