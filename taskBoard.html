@@ -21,8 +21,8 @@
         </div>
       </div>
       <div class="user-info">
-        <span>Usuario vai aqui</span>
-        <button class="logout-btn" onclick="logoff()">Logout</button>
+        <span id="nomeUsuario" ></span>
+        <button class="logout-btn" onclick="funcLogoff()">Logout</button>
         <div class="user-info-2">
           <label class="switch">
             <input type="checkbox" id="dark-mode-toggle" />
@@ -87,6 +87,7 @@
       <button class="new-column-btn">Nova coluna</button>
     </main>
 
-    <script src="./scripts/pages/scriptTaskBoard.js"></script>
+    <script type="module" src="./scripts/pages/scriptTaskBoard.js"></script>
+    <script src="./scripts/pages/scriptLogoff.js"></script>
   </body>
 </html>
