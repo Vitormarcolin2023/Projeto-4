@@ -7,19 +7,19 @@ function funcLogoff() {
 /* Quando o usuário clicar no botão, alterne entre ocultar e mostrar o conteúdo suspenso/dropdown. */
 function myFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
-
+  
 }
 
-// Feche o menu suspenso/dropdown se o usuário clicar fora dele.
-window.onclick = function (event) {
-  if (!event.target.matches(".dropbtn")) {
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
     var dropdowns = document.getElementsByClassName("dropdown-content");
     var i;
     for (i = 0; i < dropdowns.length; i++) {
       var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains("show")) {
-        openDropdown.classList.remove("show");
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
       }
     }
   }
-};
+}
