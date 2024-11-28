@@ -3,6 +3,9 @@ import { getFromLocalStorage } from "../utils/storage.js";
 
 const recuperarUser = getFromLocalStorage("user");
 const boardsList = document.getElementById("listarItem");
+const columns = document.querySelectorAll(".column");
+const darkModeToggle = document.getElementById("dark-mode-toggle");
+const body = document.body;
 
 /*Apresentar o nome do Usuario */
 function recuperarNomeUser() {
@@ -21,10 +24,7 @@ recuperarNomeUser();
 
 async function carregarBoars() {
   try {
-    const resposta = await fetch(
-      "https://personal-ga2xwx9j.outsystemscloud.com/TaskBoard_CS/rest/TaskBoard/Boards"
-    );
-
+    const resposta = await fetch(`${API_BASE_URL}/Boards`);
     if (!resposta.ok) {
       throw new Error("Erro ao carregar boards");
     }
@@ -36,7 +36,7 @@ async function carregarBoars() {
 }
 
 function boardsDropdowns(boards) {
-  boardsList.innerHTML = ""; // Limpa a lista antes de adicionar novos itens
+  boardsList.innerHTML = "";
 
   boards.forEach((board) => {
     const listarItem = document.createElement("li");
@@ -46,21 +46,22 @@ function boardsDropdowns(boards) {
       </a>`;
 
     listarItem.addEventListener("click", (event) => {
-      loadBoards(board.id); // Certifique-se de que loadBoards esteja definida
+      loadBoards(board.id);
       document.querySelector(".dropbtn").textContent = board.name;
-      myFunction(); // Fecha o dropdown
+      myFunction();
     });
 
-    boardsList.appendChild(listarItem); // Adiciona o li à ul
+    boardsList.appendChild(listarItem);
   });
 }
 
 carregarBoars();
 
+/*Função para saber qual o modo o usuario está usando*/
+
+
 /*Modo Dark*/
-const columns = document.querySelectorAll(".column");
-const darkModeToggle = document.getElementById("dark-mode-toggle");
-const body = document.body;
+
 
 let darkMode = localStorage.getItem("darkMode");
 
@@ -101,7 +102,6 @@ document.addEventListener("dragend", (e) => {
     e.target.classList.remove("dragging");
   }
 });
-
 
 /*Outra função */
 
