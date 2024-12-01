@@ -46,8 +46,8 @@ function boardsDropdowns(boards) {
       </a>`;
 
     listarItem.addEventListener("click", (event) => {
-      loadBoards(board.id);
-      document.querySelector(".dropbtn").textContent = board.name;
+      //loadBoards(board.Id);
+      document.querySelector(".dropbtn").textContent = board.Name;
       myFunction();
     });
 
