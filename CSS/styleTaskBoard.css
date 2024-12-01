@@ -41,9 +41,9 @@ header {
   gap: 50px;
 }
 
-.user-info-2{
-    display: flex;
-    align-items: center;
+.user-info-2 {
+  display: flex;
+  align-items: center;
 }
 .logout-btn {
   background-color: #f44336; /* Vermelho para o botão de logout */
@@ -116,9 +116,59 @@ main {
   gap: 20px;
 }
 
+.kanban {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-grow: 1;
+  overflow-x: auto;
+  background-color: #bbdefb; /* Cor de fundo azul clara para o Kanban */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  gap: 10px;
+}
+
+.column h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.item {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.new-column-btn,
+.new-task-btn {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px; /* Tamanho da fonte ajustado */
+  margin: 5px 0; /* Margem ajustada */
+  cursor: pointer;
+  border-radius: 5px;
+  align-self: flex-end; /* Alinha os botões "Nova tarefa" à direita */
+}
+
+
+
 body.dark-mode {
-    background-color: #333; /* Cor de fundo escura */
-    color: white;
+  background-color: #333; /* Cor de fundo escura */
+  color: white;
 }
 
 body.dark-mode .kanban {
@@ -133,26 +183,23 @@ body.dark-mode .item {
   background-color: #666;
   color: white;
 }
-body.dark-mode header{
+body.dark-mode header {
   background-color: #444;
   color: white;
-
 }
 body.dark-mode .logout-btn {
   background-color: #f44336; /* Vermelho para o botão de logout */
   color: white;
-
 }
-body.dark-mode #board-select{
+body.dark-mode #board-select {
   background-color: #777; /* Cinza escuro */
   color: white;
-
 }
 
 /*CSS do DropDowm*/
 
 .dropbtn {
-  background-color: #3498DB;
+  background-color: #3498db;
   color: white;
   padding: 16px;
   font-size: 16px;
@@ -160,8 +207,9 @@ body.dark-mode #board-select{
   cursor: pointer;
 }
 
-.dropbtn:hover, .dropbtn:focus {
-  background-color: #2980B9;
+.dropbtn:hover,
+.dropbtn:focus {
+  background-color: #2980b9;
 }
 
 .dropdown {
@@ -175,7 +223,7 @@ body.dark-mode #board-select{
   background-color: #f1f1f1;
   min-width: 160px;
   overflow: auto;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
@@ -186,6 +234,10 @@ body.dark-mode #board-select{
   display: block;
 }
 
-.dropdown a:hover {background-color: #ddd;}
+.dropdown a:hover {
+  background-color: #ddd;
+}
 
-.show {display: block;}
+.show {
+  display: block;
+}
