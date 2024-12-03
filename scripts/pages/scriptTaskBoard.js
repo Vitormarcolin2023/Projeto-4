@@ -2,9 +2,8 @@ import { API_BASE_URL } from "../../config/apiConfig.js";
 import { getFromLocalStorage } from "../utils/storage.js";
 
 const recuperarUser = getFromLocalStorage("user");
-const idDropdown = document.getElementById("myDropdown"); // Corrigido o ID para "myDropdown"
+const idDropdown = document.getElementById("myDropdown");
 const boardsList = document.getElementById("listarItem");
-// const columns = document.querySelectorAll(".column"); // Movido para dentro de criaColunas
 
 /*Apresentar o nome do Usuario */
 function recuperarNomeUser() {
@@ -23,12 +22,13 @@ recuperarNomeUser();
 let btndrop = document.querySelector(".dropbtn"); // Variável para o botão do dropdown
 
 /*Recuepra colunas e Tasks*/
-
 async function boardsInfo() {
   try {
     const response = await fetch(`${API_BASE_URL}/Boards`);
     if (!response.ok) {
-      throw new Error(`Erro ao carregar informações: ${response.status} - ${response.statusText}`);
+      throw new Error(
+        `Erro ao carregar informações: ${response.status} - ${response.statusText}`
+      );
     }
     const boards = await response.json();
 
@@ -41,149 +41,141 @@ async function boardsInfo() {
       lista.innerHTML = `<a id="${board.Id}">${board.Name}</a>`;
       lista.addEventListener("click", (event) => {
         btndrop.innerHTML = event.target.innerHTML;
-        limpaBoards(); // Certifique-se que limpaBoards está definida
+        limpaBoards();
         chamaBoard(board.Id);
-        myFunction(); // Esconde o dropdown após a seleção
+        myFunction();
       });
-      idDropdown.querySelector("ul").appendChild(lista); // Adiciona ao <ul> dentro do dropdown
+      idDropdown.querySelector("ul").appendChild(lista);
     });
   } catch (error) {
     console.error("Erro ao buscar informações dos boards:", error);
-    idDropdown.querySelector("ul").innerHTML = `<li>Erro ao carregar informações.</li>`;
+    idDropdown.querySelector(
+      "ul"
+    ).innerHTML = `<li>Erro ao carregar informações.</li>`;
   }
 }
-
-
 
 async function chamaBoard(boardId) {
   try {
     const response = await fetch(`${API_BASE_URL}/Board?BoardId=${boardId}`);
     if (!response.ok) {
-      throw new Error(`Erro ao carregar informações: ${response.status} - ${response.statusText}`);
+      throw new Error(
+        `Erro ao carregar informações: ${response.status} - ${response.statusText}`
+      );
     }
-    const result = await response.json();
-    if (result) {
-      carregaColunas(result.Id);
+    const boardData = await response.json();
+    if (boardData) {
+      criaColunas(boardData.Id);
     }
   } catch (error) {
     console.error("Erro ao recuperar board:", error);
+    // Lidar com o erro
   }
 }
 
-async function carregaColunas(boardId) {
+async function criaColunas(boardId) {
   try {
-    const response = await fetch(`${API_BASE_URL}/ColumnByBoardId?BoardId=${boardId}`);
-    if (!response.ok) {
-      throw new Error(`Erro ao carregar informações: ${response.status} - ${response.statusText}`);
-    }
-    const result = await response.json();
-    if (result) {
-      criaColunas(result);
+    const columnsData = await buscarDadosColunas(boardId);
+    const kanban = document.querySelector(".kanban");
+    kanban.innerHTML = ""; // Limpa o kanban
+
+    if (columnsData && columnsData.length > 0) {
+      for (const columnData of columnsData) {
+        await criarColuna(columnData, kanban);
+      }
+    } else {
+      exibirMensagemSemColunas(kanban);
     }
   } catch (error) {
-    console.error("Erro ao carregar colunas:", error);
+    console.error("Erro ao criar colunas:", error);
+    exibirMensagemErroColunas(kanban);
   }
 }
 
-
-function criaColunas(columnsData) {
-  const kanban = document.querySelector('.kanban');
-  kanban.innerHTML = ''; // Limpa o conteúdo anterior do Kanban
-
-  columnsData.forEach(async (columnData) => {
-    const column = document.createElement('div');
-    column.classList.add('column');
-    column.innerHTML = `<h2>${columnData.Name}</h2><div class="items-container"></div><button class="new-task-btn">Nova Tarefa</button>`;
-    kanban.appendChild(column);
-
-    const tasks = await getTasks(columnData.Id);
-    const itemsContainer = column.querySelector('.items-container');
-
-    if (tasks) {
-      tasks.forEach(task => {
-        const item = document.createElement('div');
-        item.classList.add('item');
-        item.draggable = true;  // Torna o item arrastável
-        item.textContent = task.Name;
-        itemsContainer.appendChild(item);
-
-        // Adiciona evento de arrastar para cada item
-        item.addEventListener('dragstart', () => {
-          item.classList.add('dragging');
-        });
-
-        item.addEventListener('dragend', () => {
-          item.classList.remove('dragging');
-        });
-      });
-    }
-  });
-
-
-  const columns = document.querySelectorAll(".column"); // Seleciona as colunas após a criação
-  // Adiciona os eventos de drag and drop para as colunas
-  columns.forEach((column) => {
-    column.addEventListener("dragover", (e) => {
-      e.preventDefault();
-      const dragging = document.querySelector(".dragging");
-      const itemsContainer = column.querySelector(".items-container");
-      const applyAfter = getNewPosition(itemsContainer, e.clientY);
-
-      if (dragging && itemsContainer) {
-        if (applyAfter) {
-          itemsContainer.insertBefore(dragging, applyAfter.nextElementSibling);
-        } else {
-          itemsContainer.prepend(dragging);
-        }
-      }
-    });
-  });
-
-
-
+async function buscarDadosColunas(boardId) {
+  const response = await fetch(
+    `${API_BASE_URL}/ColumnByBoardId?BoardId=${boardId}`
+  );
+  if (!response.ok) {
+    throw new Error(
+      `Erro ao carregar colunas: ${response.status} - ${response.statusText}`
+    );
+  }
+  return await response.json();
 }
 
+async function criarColuna(columnData, kanban) {
+  const column = document.createElement("div");
+  column.classList.add("column");
+  column.id = `column-${columnData.Id}`;
+  column.innerHTML = `<h2>${columnData.Name}</h2><div id="cards-${columnData.Id}" class="items-container"></div><button class="new-task-btn">Nova Tarefa</button>`;
+  kanban.appendChild(column);
 
-async function getTasks(columnId) {
+  // Carrega as tarefas APÓS a coluna ser adicionada ao DOM
+  await carregarTasks(columnData.Id, column.querySelector(".items-container"));
+}
+
+function exibirMensagemSemColunas(kanban) {
+  kanban.innerHTML = "<p>Nenhuma coluna encontrada para este board.</p>";
+}
+
+function exibirMensagemErroColunas(kanban) {
+  kanban.innerHTML = "<p>Erro ao carregar as colunas.</p>";
+}
+
+async function buscarTasks(columnId) {
   try {
     const response = await fetch(
       `${API_BASE_URL}/TasksByColumnId?ColumnId=${columnId}`
     );
     if (!response.ok) {
       throw new Error(
-        `Erro ao carregar informações: ${response.status} - ${response.statusText}`
+        `Erro na API: ${response.status} - ${response.statusText}`
       );
     }
-    const result = await response.json();
-    return result;
+    const tasksData = await response.json();
+    console.log(`Tasks para a coluna ${columnId}:`, tasksData);
+    return tasksData;
   } catch (error) {
-    console.error("Erro ao carregar tasks:", error);
-    return null; // Retorna null em caso de erro
+    console.error(`Erro ao buscar tasks para a coluna ${columnId}:`, error);
+    return [];
   }
 }
 
+async function carregarTasks(columnId, columnCards) {
+  try {
+    const tasksData = await buscarTasks(columnId);
+    exibirTasks(tasksData, columnCards);
+  } catch (error) {
+    console.error(
+      `Erro ao carregar as tasks para a coluna ${columnId}:`,
+      error
+    );
+    columnCards.innerHTML = "<p>Erro ao carregar as tasks.</p>";
+  }
+}
 
+function exibirTasks(tasksData, columnCards) {
+  if (!tasksData || tasksData.length === 0) {
+    columnCards.innerHTML = "<p>Nenhuma tarefa nesta coluna.</p>";
+    return;
+  }
+
+  tasksData.forEach((task) => {
+    const taskItem = document.createElement("div");
+    taskItem.classList.add("item");
+    taskItem.innerHTML = `
+      <h4>${task.Title}</h4>
+      <p>${task.Description}</p>
+      `;
+    columnCards.appendChild(taskItem);
+  });
+}
 
 function limpaBoards() {
-  const kanban = document.querySelector('.kanban');
-  kanban.innerHTML = ''; // Limpa o kanban para novos boards
+  const kanban = document.querySelector(".kanban");
+  kanban.innerHTML = "";
 }
 
-
-
+// Inicializa a busca pelos boards
 boardsInfo();
-
-function getNewPosition(itemsContainer, posY) {
-  const cards = itemsContainer.querySelectorAll(".item:not(.dragging)");
-  let result = null; // Inicializa como null
-
-  for (let refer_card of cards) {
-    const box = refer_card.getBoundingClientRect();
-    const boxCenterY = box.y + box.height / 2;
-
-    if (posY >= boxCenterY) {
-      result = refer_card;
-    }
-  }
-  return result;
-}
