@@ -12,12 +12,12 @@ const dropdown = document.querySelector(".dropbtn");
 const kanban = document.querySelector(".kanban");
 
 toggle.addEventListener("click", () => {
-  let temaAtual = modificaTema();
+  let temaAtual = alteraTema();
   console.log(temaAtual);
-  salvarNovoTema(recuperarUser.id, temaAtual);
+  salvaTema(recuperarUser.id, temaAtual);
 });
 
-function modificaTema() {
+function alteraTema() {
   toggle.classList.toggle("dark");
   body.classList.toggle("dark");
   tituloLogo.classList.toggle("dark");
@@ -53,14 +53,14 @@ async function recuperaTema() {
     }
     const result = await response.json();
     if (result.DefaultThemeId === 1) {
-      modificaTema();
+      alteraTema();
     }
   } catch (error) {
     console.error("Erro ao recuperar tema:", error);
   }
 }
 
-async function salvarNovoTema(id, novoTema) {
+async function salvaTema(id, novoTema) {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
