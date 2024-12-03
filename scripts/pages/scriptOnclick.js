@@ -1,6 +1,6 @@
 function funcLogoff() {
   localStorage.removeItem('user');
-  window.location.href = "index.html";
+  window.location.href = "/index.html";
 }
 
 /*Codigo de como função basica do Drop */

@@ -1,76 +1,93 @@
-const columns = document.querySelectorAll(".column");
-const darkModeToggle = document.getElementById("dark-mode-toggle");
-const body = document.body;
+import { API_BASE_URL } from "../../config/apiConfig.js";
+import { getFromLocalStorage } from "../utils/storage.js";
 
-let darkMode = localStorage.getItem("darkMode");
 
-if (darkMode === "enabled") {
-  enableDarkMode();
-}
+const recuperarUser = getFromLocalStorage("user");
+const body = document.querySelector("body");
+const toggle = document.getElementById("dark-mode-toggle");
+const tituloLogo = document.getElementById("titulo");
+const header = document.querySelector(".header-content");
+const logoutBtn = document.getElementById("logout-bnt");
+const dropdown = document.querySelector(".dropbtn");
+const kanban = document.querySelector(".kanban");
 
-darkModeToggle.addEventListener("change", () => {
-  darkMode = localStorage.getItem("darkMode");
+toggle.addEventListener("click", () => {
+  let temaAtual = modificaTema();
+  console.log(temaAtual);
+  salvarNovoTema(recuperarUser.id, temaAtual);
+});
 
-  if (darkMode !== "enabled") {
-    enableDarkMode();
+function modificaTema() {
+  toggle.classList.toggle("dark");
+  body.classList.toggle("dark");
+  tituloLogo.classList.toggle("dark");
+  header.classList.toggle("dark");
+  logoutBtn.classList.toggle("dark");
+  dropdown.classList.toggle("dark");
+  kanban.classList.toggle("dark");
+
+  if (
+    toggle.classList.contains("dark") &&
+    body.classList.contains("dark") &&
+    tituloLogo.classList.contains("dark") &&
+    header.classList.contains("dark") &&
+    logoutBtn.classList.contains("dark") &&
+    dropdown.classList.contains("dark") &&
+    kanban.classList.contains("dark")
+  ) {
+    return 1;
   } else {
-    disableDarkMode();
+    return 2;
   }
-});
-
-function enableDarkMode() {
-  body.classList.add("dark-mode");
-  localStorage.setItem("darkMode", "enabled");
-  darkModeToggle.checked = true;
 }
 
-function disableDarkMode() {
-  body.classList.remove("dark-mode");
-  localStorage.setItem("darkMode", "disabled");
-  darkModeToggle.checked = false;
-}
-
-document.addEventListener("dragstart", (e) => {
-  if (e.target.classList.contains("item")) {
-    e.target.classList.add("dragging");
-  }
-});
-
-document.addEventListener("dragend", (e) => {
-  if (e.target.classList.contains("item")) {
-    e.target.classList.remove("dragging");
-  }
-});
-
-columns.forEach((column) => {
-  column.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    const dragging = document.querySelector(".dragging");
-    const itemsContainer = column.querySelector(".items-container");
-    const applyAfter = getNewPosition(itemsContainer, e.clientY);
-
-    if (dragging && itemsContainer) {
-      // Verifica se ambos os elementos existem
-      if (applyAfter) {
-        itemsContainer.insertBefore(dragging, applyAfter.nextElementSibling);
-      } else {
-        itemsContainer.prepend(dragging);
-      }
+async function recuperaTema() {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/PersonConfigById?PersonId=${recuperarUser.id}`
+    );
+    if (!response.ok) {
+      throw new Error(
+        `Erro ao carregar informações: ${response.status} - ${response.statusText}`
+      );
     }
+    const result = await response.json();
+    if (result.DefaultThemeId === 1) {
+      modificaTema();
+    }
+  } catch (error) {
+    console.error("Erro ao recuperar tema:", error);
+  }
+}
+
+async function salvarNovoTema(id, novoTema) {
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  const raw = JSON.stringify({
+    ThemeId: novoTema,
   });
-});
 
-function getNewPosition(itemsContainer, posY) {
-  const cards = itemsContainer.querySelectorAll(".item:not(.dragging)");
-  let result = null; // Inicializa como null
+  const requestOptions = {
+    method: "PATCH",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
 
-  for (let refer_card of cards) {
-    const box = refer_card.getBoundingClientRect();
-    const boxCenterY = box.y + box.height / 2;
-
-    if (posY >= boxCenterY) {
-      result = refer_card;
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/ConfigPersonTheme?PersonId=${id}`,
+      requestOptions
+    );
+    if (!response.ok) {
+      throw new Error(`Erro: ${response.status} - ${response.statusText}`);
     }
+    const result = await response.text();
+    console.log(result);
+  } catch (error) {
+    console.error("Erro ao salvar informações:", error);
   }
-  return result;
 }
+
+recuperaTema();

@@ -59,50 +59,6 @@ carregarBoars();
 
 /*Função para saber qual o modo o usuario está usando*/
 
-
-/*Modo Dark*/
-
-
-let darkMode = localStorage.getItem("darkMode");
-
-if (darkMode === "enabled") {
-  enableDarkMode();
-}
-
-darkModeToggle.addEventListener("change", () => {
-  darkMode = localStorage.getItem("darkMode");
-
-  if (darkMode !== "enabled") {
-    enableDarkMode();
-  } else {
-    disableDarkMode();
-  }
-});
-
-function enableDarkMode() {
-  body.classList.add("dark-mode");
-  localStorage.setItem("darkMode", "enabled");
-  darkModeToggle.checked = true;
-}
-
-function disableDarkMode() {
-  body.classList.remove("dark-mode");
-  localStorage.setItem("darkMode", "disabled");
-  darkModeToggle.checked = false;
-}
-
-document.addEventListener("dragstart", (e) => {
-  if (e.target.classList.contains("item")) {
-    e.target.classList.add("dragging");
-  }
-});
-
-document.addEventListener("dragend", (e) => {
-  if (e.target.classList.contains("item")) {
-    e.target.classList.remove("dragging");
-  }
-});
-
 /*Outra função */
 
 columns.forEach((column) => {

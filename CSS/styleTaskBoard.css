@@ -164,37 +164,40 @@ main {
   align-self: flex-end; /* Alinha os botões "Nova tarefa" à direita */
 }
 
+/*Dark*/
 
-
-body.dark-mode {
-  background-color: #333; /* Cor de fundo escura */
-  color: white;
-}
-
-body.dark-mode .kanban {
-  background-color: #444;
+.dark-mode-toggle.dark{
+  background-color: #001a2c;
 }
 
-body.dark-mode .column {
-  background-color: #555;
+body.dark{
+  background-color: #001422;
 }
 
-body.dark-mode .item {
-  background-color: #666;
-  color: white;
+.titulo.dark{
+  color: #001a2c;
 }
-body.dark-mode header {
-  background-color: #444;
-  color: white;
+
+.header-content.dark{
+  background-color: rgba(255, 255, 255, 0.8);;
 }
-body.dark-mode .logout-btn {
-  background-color: #f44336; /* Vermelho para o botão de logout */
-  color: white;
+
+.logout-btnt.dark:hover{
+  color: #007acc;
 }
-body.dark-mode #board-select {
-  background-color: #777; /* Cinza escuro */
-  color: white;
+
+.dropbtn.dark{
+  background-color: #d0d3d6;
 }
+
+.dropbtn.dark:hover{
+  background-color:#8da8bb;
+}
+
+.kanban.dark{
+  background: rgba(189, 215, 248, 0.144); 
+}
+
 
 /*CSS do DropDowm*/
 
