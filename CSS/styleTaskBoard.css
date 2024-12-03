@@ -7,14 +7,14 @@
 }
 
 body {
-  background-color: #e0f2f7; /* Cor de fundo azul clara */
+  background-color: #5f9ed1;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
 header {
-  background-color: #2196f3; /* Azul mais escuro */
+  background-color: #375c7a; /* Azul mais escuro */
   color: white;
   padding: 10px 20px; /* Espaçamento interno ajustado */
   display: flex;
@@ -122,7 +122,7 @@ main {
   gap: 10px;
   flex-grow: 1;
   overflow-x: auto;
-  background-color: #bbdefb; /* Cor de fundo azul clara para o Kanban */
+  background-color: #bbdefb;
   padding: 10px;
   border-radius: 5px;
 }
@@ -179,15 +179,15 @@ body.dark{
 }
 
 .header-content.dark{
-  background-color: rgba(255, 255, 255, 0.8);;
+  background-color: #375c7a;;
 }
 
 .logout-btnt.dark:hover{
-  color: #007acc;
+  color: #6b889c;
 }
 
 .dropbtn.dark{
-  background-color: #d0d3d6;
+  background-color: #375c7a;
 }
 
 .dropbtn.dark:hover{
