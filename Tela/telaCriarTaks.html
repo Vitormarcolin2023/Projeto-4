@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Criar Coluna</title>
+    <link rel="stylesheet" href="../CSS/styleCriarColunas.css" />
+  </head>
+  <body>
+    <div class="form-container">
+      <h2>Criar Tarefas</h2>
+      <dev id="createColumnForm">
+
+        <label for="name">Nome da Tarefe</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Nome da Tarefa"
+          required
+        />
+
+        <label for="name">Descrição da Tarefa</label>
+        <input
+          type="text"
+          id="descrição"
+          name="descrição"
+          placeholder="Descrição da Tarefa"
+          required
+        />
+
+        <button type="submit" id="submit">Criar Coluna</button>
+      </dev>
+
+      <div class="message" id="responseMessage"></div>
+    </div>
+
+    <script type="module" src="../scripts/pages/scriptCriarTaks.js"></script>
+  </body>
+</html>

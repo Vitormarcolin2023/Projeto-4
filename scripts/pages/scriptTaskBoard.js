@@ -1,9 +1,10 @@
 import { API_BASE_URL } from "../../config/apiConfig.js";
 import { getFromLocalStorage } from "../utils/storage.js";
+import { saveToLocalStorage } from "../utils/storage.js";
 
 const recuperarUser = getFromLocalStorage("user");
 const idDropdown = document.getElementById("myDropdown");
-const boardsList = document.getElementById("listarItem");
+//const boardsList = document.getElementById("listarItem");
 
 /*Apresentar o nome do Usuario */
 function recuperarNomeUser() {
@@ -66,6 +67,7 @@ async function chamaBoard(boardId) {
     const boardData = await response.json();
     if (boardData) {
       criaColunas(boardData.Id);
+      saveToLocalStorage("board", { id: boardData.Id });
     }
   } catch (error) {
     console.error("Erro ao recuperar board:", error);
@@ -108,7 +110,12 @@ async function criarColuna(columnData, kanban) {
   const column = document.createElement("div");
   column.classList.add("column");
   column.id = `column-${columnData.Id}`;
-  column.innerHTML = `<h2>${columnData.Name}</h2><div id="cards-${columnData.Id}" class="items-container"></div><button class="new-task-btn">Nova Tarefa</button>`;
+  column.innerHTML = `<h2>${columnData.Name}</h2><div id="cards-${
+    columnData.Id
+  }" class="items-container"></div><button ${saveToLocalStorage("coluna", {
+    id: columnData.Id,
+  })} class="new-task-btn" onclick="funcCriarTaks()">Nova Tarefa</button>`;
+
   kanban.appendChild(column);
 
   // Carrega as tarefas APÓS a coluna ser adicionada ao DOM

@@ -23,3 +23,15 @@ window.onclick = function(event) {
     }
   }
 }
+
+
+/*Função para Transferir para a tela de criar coluna*/
+
+function funcCriarColuna() {
+  window.location.href = "telaCriarColunas.html";
+}
+
+
+function funcCriarTaks() {
+  window.location.href = "telaCriarTaks.html";
+}
