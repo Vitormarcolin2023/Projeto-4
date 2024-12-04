@@ -4,7 +4,6 @@ import { saveToLocalStorage } from "../utils/storage.js";
 
 const recuperarUser = getFromLocalStorage("user");
 const idDropdown = document.getElementById("myDropdown");
-//const boardsList = document.getElementById("listarItem");
 
 /*Apresentar o nome do Usuario */
 function recuperarNomeUser() {
@@ -44,7 +43,7 @@ async function boardsInfo() {
         btndrop.innerHTML = event.target.innerHTML;
         limpaBoards();
         chamaBoard(board.Id);
-        myFunction();
+        myFunction(); // Certifique-se de que myFunction() esteja definida
       });
       idDropdown.querySelector("ul").appendChild(lista);
     });
@@ -71,7 +70,6 @@ async function chamaBoard(boardId) {
     }
   } catch (error) {
     console.error("Erro ao recuperar board:", error);
-    // Lidar com o erro
   }
 }
 
@@ -110,15 +108,12 @@ async function criarColuna(columnData, kanban) {
   const column = document.createElement("div");
   column.classList.add("column");
   column.id = `column-${columnData.Id}`;
-  column.innerHTML = `<h2>${columnData.Name}</h2><div id="cards-${
-    columnData.Id
-  }" class="items-container"></div><button ${saveToLocalStorage("coluna", {
-    id: columnData.Id,
-  })} class="new-task-btn" onclick="funcCriarTaks()">Nova Tarefa</button>`;
+  column.innerHTML = `<h2>${columnData.Name}</h2><div id="cards-${columnData.Id}" class="items-container"></div><button data-column-id="${columnData.Id}" class="new-task-btn" onclick="funcCriarTaks()">Nova Tarefa</button>`;
+
+  const newTaskBtn = column.querySelector(".new-task-btn");
+  newTaskBtn.addEventListener("click", funcCriarTaks);
 
   kanban.appendChild(column);
-
-  // Carrega as tarefas APÓS a coluna ser adicionada ao DOM
   await carregarTasks(columnData.Id, column.querySelector(".items-container"));
 }
 
@@ -179,10 +174,15 @@ function exibirTasks(tasksData, columnCards) {
   });
 }
 
+function funcCriarTaks(event) {
+  const columnId = event.target.dataset.columnId;
+  saveToLocalStorage("coluna", { id: columnId });
+  console.log("ID da coluna clicada:", columnId);
+}
+
 function limpaBoards() {
   const kanban = document.querySelector(".kanban");
   kanban.innerHTML = "";
 }
 
-// Inicializa a busca pelos boards
 boardsInfo();
