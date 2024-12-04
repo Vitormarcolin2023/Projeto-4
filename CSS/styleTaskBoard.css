@@ -166,38 +166,37 @@ main {
 
 /*Dark*/
 
-.dark-mode-toggle.dark{
+.dark-mode-toggle.dark {
   background-color: #001a2c;
 }
 
-body.dark{
+body.dark {
   background-color: #001422;
 }
 
-.titulo.dark{
+.titulo.dark {
   color: #001a2c;
 }
 
-.header-content.dark{
-  background-color: #375c7a;;
-}
-
-.logout-btnt.dark:hover{
-  color: #6b889c;
-}
-
-.dropbtn.dark{
+.header-content.dark {
   background-color: #375c7a;
 }
 
-.dropbtn.dark:hover{
-  background-color:#8da8bb;
+.logout-btnt.dark:hover {
+  color: #6b889c;
 }
 
-.kanban.dark{
-  background: rgba(189, 215, 248, 0.144); 
+.dropbtn.dark {
+  background-color: #375c7a;
 }
 
+.dropbtn.dark:hover {
+  background-color: #8da8bb;
+}
+
+.kanban.dark {
+  background: rgba(189, 215, 248, 0.144);
+}
 
 /*CSS do DropDowm*/
 

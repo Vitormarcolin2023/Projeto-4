@@ -1,5 +1,5 @@
 function funcLogoff() {
-  localStorage.removeItem('user');
+  localStorage.clear();
   window.location.href = "/index.html";
 }
 
@@ -34,4 +34,8 @@ function funcCriarColuna() {
 
 function funcCriarTaks() {
   window.location.href = "telaCriarTaks.html";
+}
+
+function funcCriarBoard() {
+  window.location.href = "telaCriarBoard.html";
 }

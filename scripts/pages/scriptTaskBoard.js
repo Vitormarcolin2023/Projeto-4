@@ -44,6 +44,8 @@ async function boardsInfo() {
         limpaBoards();
         chamaBoard(board.Id);
         myFunction(); // Certifique-se de que myFunction() esteja definida
+        const boardDescricao = document.getElementById("descrição-board");
+        boardDescricao.innerHTML = `<h4>${board.Description}</h4>`;
       });
       idDropdown.querySelector("ul").appendChild(lista);
     });
@@ -108,7 +110,12 @@ async function criarColuna(columnData, kanban) {
   const column = document.createElement("div");
   column.classList.add("column");
   column.id = `column-${columnData.Id}`;
-  column.innerHTML = `<h2>${columnData.Name}</h2><div id="cards-${columnData.Id}" class="items-container"></div><button data-column-id="${columnData.Id}" class="new-task-btn" onclick="funcCriarTaks()">Nova Tarefa</button>`;
+  column.innerHTML = `<h2>${columnData.Name}</h2>
+  <div id="cards-${columnData.Id}" class="items-container">
+  </div>
+  <button data-column-id="${columnData.Id}" class="new-task-btn" onclick="funcCriarTaks()">
+    Nova Tarefa
+  </button>`;
 
   const newTaskBtn = column.querySelector(".new-task-btn");
   newTaskBtn.addEventListener("click", funcCriarTaks);

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TaskBoard</title>
+    <link rel="stylesheet" href="../CSS/styleCriarColunas.css" />
+  </head>
+  <body>
+    <div class="form-container">
+      <h2>Criar Boards</h2>
+      <dev id="createColumnForm">
+
+        <label for="name">Nome do Board</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Nome do Boards"
+          required
+        />
+
+        <label for="name">Descrição do Board</label>
+        <input
+          type="text"
+          id="descrição"
+          name="descrição"
+          placeholder="Descrição do Board"
+          required
+        />
+
+        <button type="submit" id="submit">Criar Board
+        </button>
+      </dev>
+
+      <div class="message" id="responseMessage"></div>
+    </div>
+
+    <script type="module" src="../scripts/pages/scriptCriarBoard.js"></script>
+  </body>
+</html>
