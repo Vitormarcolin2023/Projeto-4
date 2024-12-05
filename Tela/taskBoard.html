@@ -39,17 +39,31 @@
 
     <main>
       <div id="descrição-board"></div>
-      <button class="new-column-btn" onclick="funcCriarBoard()" >Criar Board</button>
+      <div class="new-column-div">
+        <button class="new-column-btn" onclick="funcCriarBoard()">
+          <i class="bi bi-file-earmark-plus"></i>
+          Criar Board
+        </button>
+        <button class="new-column-btn" onclick="funcEditarBoard()">
+          <i class="bi bi-pencil-square"></i>
+          Editar Board
+        </button>
+        <button class="new-column-btn" onclick="funcCriarBoard()">
+          <i class="bi bi-trash3-fill"></i>
+          Criar Board
+        </button>
+      </div>
+
       <div class="kanban">
-        
         <div class="column" id="adiciona-clunas"></div>
       </div>
-        <button class="new-column-btn" onclick="funcCriarColuna()" >Criar colunas</button>
+      <button class="new-column-btn" onclick="funcCriarColuna()">
+        Criar colunas
+      </button>
     </main>
 
     <script type="module" src="../scripts/pages/scriptTaskBoard.js"></script>
     <script src="../scripts/pages/scriptOnclick.js"></script>
     <script type="module" src="../scripts/utils/scriptModoDark.js"></script>
-
   </body>
 </html>

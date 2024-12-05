@@ -1,3 +1,6 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+
 /* Reset de estilos */
 * {
   margin: 0;
@@ -154,13 +157,18 @@ main {
   border: none;
   color: white;
   padding: 8px 16px;
-  text-align: center;
+  justify-content: flex-end;
   text-decoration: none;
   display: inline-block;
   font-size: 14px; /* Tamanho da fonte ajustado */
   margin: 5px 0; /* Margem ajustada */
   cursor: pointer;
   border-radius: 5px;
+  align-self: flex-end; /* Alinha os botões "Nova tarefa" à direita */
+}
+
+.new-column-div{
+  justify-content: flex-end;
   align-self: flex-end; /* Alinha os botões "Nova tarefa" à direita */
 }
 

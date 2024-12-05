@@ -3,38 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Criar Coluna</title>
+    <title>TaskBoard</title>
     <link rel="stylesheet" href="../CSS/styleCriarColunas.css" />
   </head>
   <body>
     <div class="form-container">
-      <h2>Criar Tarefas</h2>
+      <h2>Editar Boards</h2>
       <dev id="createColumnForm">
 
-        <label for="name">Nome da Tarefe</label>
+        <label for="name">Nome do Board</label>
         <input
           type="text"
           id="name"
           name="name"
-          placeholder="Nome da Tarefa"
+          placeholder="Nome do Boards"
           required
         />
 
-        <label for="name">Descrição da Tarefa</label>
+        <label for="name">Descrição do Board</label>
         <input
           type="text"
           id="descrição"
           name="descrição"
-          placeholder="Descrição da Tarefa"
+          placeholder="Descrição do Board"
           required
         />
 
-        <button type="submit" id="submit">Criar Taks</button>
+        <button type="submit" id="submit">Editar Board
+        </button>
       </dev>
 
       <div class="message" id="responseMessage"></div>
     </div>
 
-    <script type="module" src="../scripts/pages/scriptCriarTaks.js"></script>
+    <script type="module" src="../scripts/pages/scriptEditarBoard.js"></script>
   </body>
 </html>

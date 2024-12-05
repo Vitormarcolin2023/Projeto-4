@@ -27,15 +27,20 @@ window.onclick = function(event) {
 
 /*Função para Transferir para a tela de criar coluna*/
 
+function funcCriarBoard() {
+  window.location.href = "telaCriarBoard.html";
+}
+
 function funcCriarColuna() {
   window.location.href = "telaCriarColunas.html";
 }
-
 
 function funcCriarTaks() {
   window.location.href = "telaCriarTaks.html";
 }
 
-function funcCriarBoard() {
-  window.location.href = "telaCriarBoard.html";
+/*Editar Board, Coluns e Taks*/
+
+function funcEditarBoard() {
+  window.location.href = "telaEditarBoard.html";
 }

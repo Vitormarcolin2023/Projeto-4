@@ -1,7 +1,7 @@
 import { API_BASE_URL } from "../../config/apiConfig.js";
 import { getFromLocalStorage } from "../utils/storage.js";
 
-const recuperarUser = getFromLocalStorage("board");
+const recuperarBoard = getFromLocalStorage("board");
 
 
 function createColumn(columnData) {
@@ -50,7 +50,7 @@ document.getElementById("submit").addEventListener("click", function (event) {
   const name = document.getElementById("name").value;
 
   const columnData = {
-    BoardId: recuperarUser.id,
+    BoardId: recuperarBoard.id,
     Name: name,
   };
 
