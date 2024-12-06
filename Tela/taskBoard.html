@@ -39,24 +39,23 @@
 
     <main>
       <div id="descrição-board"></div>
+
       <div class="new-column-div">
         <button class="new-column-btn" onclick="funcCriarBoard()">
           <i class="bi bi-file-earmark-plus"></i>
           Criar Board
         </button>
-        <button class="new-column-btn" onclick="funcEditarBoard()">
-          <i class="bi bi-pencil-square"></i>
-          Editar Board
-        </button>
-        <button class="new-column-btn" onclick="funcCriarBoard()">
+
+        <button class="new-column-btn" id="excluirBoard">
           <i class="bi bi-trash3-fill"></i>
-          Criar Board
+          Excluir Board
         </button>
       </div>
 
       <div class="kanban">
         <div class="column" id="adiciona-clunas"></div>
       </div>
+
       <button class="new-column-btn" onclick="funcCriarColuna()">
         Criar colunas
       </button>

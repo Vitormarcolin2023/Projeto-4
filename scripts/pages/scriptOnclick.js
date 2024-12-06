@@ -38,9 +38,3 @@ function funcCriarColuna() {
 function funcCriarTaks() {
   window.location.href = "telaCriarTaks.html";
 }
-
-/*Editar Board, Coluns e Taks*/
-
-function funcEditarBoard() {
-  window.location.href = "telaEditarBoard.html";
-}

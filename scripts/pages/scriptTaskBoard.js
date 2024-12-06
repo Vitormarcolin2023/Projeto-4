@@ -3,6 +3,8 @@ import { getFromLocalStorage } from "../utils/storage.js";
 import { saveToLocalStorage } from "../utils/storage.js";
 
 const recuperarUser = getFromLocalStorage("user");
+const recuperarBoard = getFromLocalStorage("board");
+const recuperarColumn = getFromLocalStorage("coluna");
 const idDropdown = document.getElementById("myDropdown");
 
 /*Apresentar o nome do Usuario */
@@ -111,14 +113,23 @@ async function criarColuna(columnData, kanban) {
   column.classList.add("column");
   column.id = `column-${columnData.Id}`;
   column.innerHTML = `<h2>${columnData.Name}</h2>
+  <button class="new-task-btn" data-column-id="${columnData.Id}" id="excluirColumns">
+    <i class="bi bi-trash3-fill"></i>    
+  </button>
   <div id="cards-${columnData.Id}" class="items-container">
   </div>
   <button data-column-id="${columnData.Id}" class="new-task-btn" onclick="funcCriarTaks()">
     Nova Tarefa
   </button>`;
 
+  const excluirColumnBtn = column.querySelector("#excluirColumns");
+
+  excluirColumnBtn.addEventListener("click", function (event) {
+    excluirColuna(columnData.Id, column); // Chama a função para excluir a coluna
+  });
+
   const newTaskBtn = column.querySelector(".new-task-btn");
-  newTaskBtn.addEventListener("click", funcCriarTaks);
+  newTaskBtn.addEventListener("click", passarIdDaColum);
 
   kanban.appendChild(column);
   await carregarTasks(columnData.Id, column.querySelector(".items-container"));
@@ -181,7 +192,75 @@ function exibirTasks(tasksData, columnCards) {
   });
 }
 
-function funcCriarTaks(event) {
+//Exclui Boards
+document
+  .getElementById("excluirBoard")
+  .addEventListener("click", async function () {
+    const boardId = recuperarBoard.id;
+    const endpoint = `${API_BASE_URL}/Board?BoardId=${boardId}`;
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        console.log("Board excluído com sucesso.");
+        limpaBoards();
+        idDropdown.querySelector("ul").innerHTML = "";
+        boardsInfo();
+        document.getElementById("descrição-board").innerHTML = "";
+        localStorage.removeItem("board");
+        alert("Board excluído com sucesso!");
+      } else {
+        // Lidar com erros da API
+        console.error(
+          `Erro ao excluir board: ${response.status} - ${response.statusText}`
+        );
+        const errorData = await response.json(); // Tentar obter detalhes do erro da API
+        alert(
+          `Erro ao excluir board: ${errorData.message || response.statusText}`
+        ); // Mostrar mensagem de erro ao usuário
+      }
+    } catch (error) {
+      // Lidar com erros de rede ou outros erros
+      console.error("Erro ao excluir board:", error);
+      alert("Erro ao excluir board. Verifique sua conexão com a internet.");
+    }
+  });
+
+//Exclui Colunas
+async function excluirColuna(columnId, columnElement) {
+  // Nova função para excluir a coluna
+  const endpoint = `${API_BASE_URL}/Column?ColumnId=${columnId}`;
+
+  try {
+    const response = await fetch(endpoint, {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      console.log("Coluna excluída com sucesso.");
+      columnElement.remove(); // Remove o elemento da coluna do DOM
+      alert("Coluna excluída com sucesso!");
+    } else {
+      // Lidar com erros da API
+      console.error(
+        `Erro ao excluir coluna: ${response.status} - ${response.statusText}`
+      );
+      const errorData = await response.json();
+      alert(
+        `Erro ao excluir coluna: ${errorData.message || response.statusText}`
+      );
+    }
+  } catch (error) {
+    // Lidar com erros de rede
+    console.error("Erro ao excluir coluna:", error);
+    alert("Erro ao excluir coluna. Verifique sua conexão com a internet.");
+  }
+}
+
+function passarIdDaColum(event) {
   const columnId = event.target.dataset.columnId;
   saveToLocalStorage("coluna", { id: columnId });
   console.log("ID da coluna clicada:", columnId);

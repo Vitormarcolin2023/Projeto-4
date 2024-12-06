@@ -23,6 +23,7 @@ function createTaks(taksData) {
       return response.json();
     })
     .then((data) => {
+      telaPrincipal();
       console.log("Taks criada com sucesso:", data);
       document.getElementById("responseMessage").textContent =
         "Taks criada com sucesso!";
@@ -59,3 +60,7 @@ document.getElementById("submit").addEventListener("click", function (event) {
 
   createTaks(taksData);
 });
+
+function telaPrincipal() {
+  window.location.href = "taskBoard.html";
+}

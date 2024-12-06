@@ -23,6 +23,7 @@ function createColumn(columnData) {
       return response.json();
     })
     .then((data) => {
+      telaPrincipal();
       console.log("Coluna criada com sucesso:", data);
       document.getElementById("responseMessage").textContent =
         "Coluna criada com sucesso!";
@@ -56,3 +57,7 @@ document.getElementById("submit").addEventListener("click", function (event) {
 
   createColumn(columnData);
 });
+
+function telaPrincipal() {
+  window.location.href = "taskBoard.html";
+}
