@@ -4,7 +4,7 @@ import { saveToLocalStorage } from "../utils/storage.js";
 
 const recuperarUser = getFromLocalStorage("user");
 const recuperarBoard = getFromLocalStorage("board");
-const recuperarColumn = getFromLocalStorage("coluna");
+const recuperaColumn = getFromLocalStorage("coluna");
 const idDropdown = document.getElementById("myDropdown");
 
 /*Apresentar o nome do Usuario */
@@ -21,7 +21,7 @@ function recuperarNomeUser() {
 recuperarNomeUser();
 
 /*DropDown*/
-let btndrop = document.querySelector(".dropbtn"); // Variável para o botão do dropdown
+let btndrop = document.querySelector(".dropbtn");
 
 /*Recuepra colunas e Tasks*/
 async function boardsInfo() {
@@ -45,7 +45,7 @@ async function boardsInfo() {
         btndrop.innerHTML = event.target.innerHTML;
         limpaBoards();
         chamaBoard(board.Id);
-        myFunction(); // Certifique-se de que myFunction() esteja definida
+        myFunction();
         const boardDescricao = document.getElementById("descrição-board");
         boardDescricao.innerHTML = `<h4>${board.Description}</h4>`;
       });
@@ -112,24 +112,24 @@ async function criarColuna(columnData, kanban) {
   const column = document.createElement("div");
   column.classList.add("column");
   column.id = `column-${columnData.Id}`;
-  column.innerHTML = `<h2>${columnData.Name}</h2>
-  <button class="new-task-btn" data-column-id="${columnData.Id}" id="excluirColumns">
+  column.innerHTML = `<button data-column-id="${columnData.Id}" class="deltet-column-btn">
     <i class="bi bi-trash3-fill"></i>    
   </button>
+  <h2>${columnData.Name}</h2>
   <div id="cards-${columnData.Id}" class="items-container">
   </div>
   <button data-column-id="${columnData.Id}" class="new-task-btn" onclick="funcCriarTaks()">
     Nova Tarefa
   </button>`;
 
-  const excluirColumnBtn = column.querySelector("#excluirColumns");
-
-  excluirColumnBtn.addEventListener("click", function (event) {
-    excluirColuna(columnData.Id, column); // Chama a função para excluir a coluna
-  });
-
   const newTaskBtn = column.querySelector(".new-task-btn");
   newTaskBtn.addEventListener("click", passarIdDaColum);
+
+  const selecionaIdParaExcluir = column.querySelector(".deltet-column-btn");
+  selecionaIdParaExcluir.addEventListener("click", passarIdDaColum);
+
+  const deletaColumnBtn = column.querySelector(".deltet-column-btn");
+  deletaColumnBtn.addEventListener("click", excluirColumns);
 
   kanban.appendChild(column);
   await carregarTasks(columnData.Id, column.querySelector(".items-container"));
@@ -192,7 +192,7 @@ function exibirTasks(tasksData, columnCards) {
   });
 }
 
-//Exclui Boards
+//Exclui Board
 document
   .getElementById("excluirBoard")
   .addEventListener("click", async function () {
@@ -213,38 +213,45 @@ document
         localStorage.removeItem("board");
         alert("Board excluído com sucesso!");
       } else {
-        // Lidar com erros da API
         console.error(
           `Erro ao excluir board: ${response.status} - ${response.statusText}`
         );
-        const errorData = await response.json(); // Tentar obter detalhes do erro da API
+        const errorData = await response.json();
         alert(
           `Erro ao excluir board: ${errorData.message || response.statusText}`
-        ); // Mostrar mensagem de erro ao usuário
+        );
       }
     } catch (error) {
-      // Lidar com erros de rede ou outros erros
       console.error("Erro ao excluir board:", error);
       alert("Erro ao excluir board. Verifique sua conexão com a internet.");
     }
   });
 
-//Exclui Colunas
-async function excluirColuna(columnId, columnElement) {
-  // Nova função para excluir a coluna
-  const endpoint = `${API_BASE_URL}/Column?ColumnId=${columnId}`;
+//Excluir coluna
+async function excluirColumns() {
+  console.log("Função de excluir Colunas em execução");
+  const columnId = recuperaColumn.id;
+  const endpoint = `${API_BASE_URL}/Column?ColumnId={${columnId}`;
+  console.log("Column ID:", columnId);
 
   try {
     const response = await fetch(endpoint, {
       method: "DELETE",
     });
+    console.log("API URL:", apiUrl);
 
     if (response.ok) {
-      console.log("Coluna excluída com sucesso.");
-      columnElement.remove(); // Remove o elemento da coluna do DOM
-      alert("Coluna excluída com sucesso!");
+      console.log("Coluna excluído com sucesso.");
+      localStorage.removeItem("coluna");
+
+      // Remove a coluna do DOM
+      const columnElement = document.getElementById(`column-${columnId}`);
+      if (columnElement) {
+        columnElement.remove();
+      }
+
+      alert("Colunna excluído com sucesso!");
     } else {
-      // Lidar com erros da API
       console.error(
         `Erro ao excluir coluna: ${response.status} - ${response.statusText}`
       );
@@ -254,7 +261,6 @@ async function excluirColuna(columnId, columnElement) {
       );
     }
   } catch (error) {
-    // Lidar com erros de rede
     console.error("Erro ao excluir coluna:", error);
     alert("Erro ao excluir coluna. Verifique sua conexão com a internet.");
   }

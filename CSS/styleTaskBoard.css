@@ -152,7 +152,8 @@ main {
 }
 
 .new-column-btn,
-.new-task-btn {
+.new-task-btn, 
+.deltet-column-btn {
   background-color: #4caf50;
   border: none;
   color: white;
