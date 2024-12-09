@@ -108,7 +108,7 @@ async function buscarDadosColunas(boardId) {
   return await response.json();
 }
 
-async function criarColuna(columnData, kanban) {
+function criarColuna(columnData, kanban) {
   const column = document.createElement("div");
   column.classList.add("column");
   column.id = `column-${columnData.Id}`;
@@ -128,11 +128,8 @@ async function criarColuna(columnData, kanban) {
   const selecionaIdParaExcluir = column.querySelector(".deltet-column-btn");
   selecionaIdParaExcluir.addEventListener("click", passarIdDaColum);
 
-  const deletaColumnBtn = column.querySelector(".deltet-column-btn");
-  deletaColumnBtn.addEventListener("click", excluirColumns);
-
   kanban.appendChild(column);
-  await carregarTasks(columnData.Id, column.querySelector(".items-container"));
+  carregarTasks(columnData.Id, column.querySelector(".items-container"));
 }
 
 function exibirMensagemSemColunas(kanban) {
@@ -228,34 +225,24 @@ document
   });
 
 //Excluir coluna
-async function excluirColumns() {
-  console.log("Função de excluir Colunas em execução");
-  const columnId = recuperaColumn.id;
-  const endpoint = `${API_BASE_URL}/Column?ColumnId={${columnId}`;
-  console.log("Column ID:", columnId);
+async function excluirColumns(columnId) {
+  console.log("Column ID (função de excluir):", columnId);
+  const endpoint = `${API_BASE_URL}/Column?ColumnId=${columnId}`;
 
   try {
-    const response = await fetch(endpoint, {
-      method: "DELETE",
-    });
-    console.log("API URL:", apiUrl);
-
+    const response = await fetch(endpoint, { method: "DELETE" });
     if (response.ok) {
-      console.log("Coluna excluído com sucesso.");
-      localStorage.removeItem("coluna");
-
-      // Remove a coluna do DOM
       const columnElement = document.getElementById(`column-${columnId}`);
       if (columnElement) {
         columnElement.remove();
+        columnElement.querySelector("div").innerHTML = "";
       }
-
-      alert("Colunna excluído com sucesso!");
+      alert("Coluna excluída com sucesso!");
     } else {
+      const errorData = await response.json();
       console.error(
         `Erro ao excluir coluna: ${response.status} - ${response.statusText}`
       );
-      const errorData = await response.json();
       alert(
         `Erro ao excluir coluna: ${errorData.message || response.statusText}`
       );
@@ -270,6 +257,10 @@ function passarIdDaColum(event) {
   const columnId = event.target.dataset.columnId;
   saveToLocalStorage("coluna", { id: columnId });
   console.log("ID da coluna clicada:", columnId);
+
+  if (event.target.classList.contains("deltet-column-btn")) {
+    excluirColumns(columnId);
+  }
 }
 
 function limpaBoards() {
